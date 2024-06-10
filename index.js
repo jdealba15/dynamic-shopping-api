@@ -45,22 +45,43 @@ const prompt = (groceryItems) =>`
     characters.
     `
 
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
     const groceryItems = req.body.join(", ");
-
     console.log('Received Data:', groceryItems);
-    res.status(200).json({ message: 'Data received successfully' });
-
+    
     async function main() {
-    const completion = await openai.chat.completions.create({
-            messages: [{ role: "system", content: prompt(groceryItems)
-            }],
-            model: "gpt-3.5-turbo",
-            });
-            console.log(completion.choices[0]);
-            }
-            main();
+            const completion = await openai.chat.completions.create({
+                    messages: [{ role: "system", content: prompt(groceryItems)}],
+                    model: "gpt-3.5-turbo",
+                });
+            
+            console.log('Completion:', completion.choices[0]);
+            return completion.choices[0]; 
+    }
+    const result = await main();
+    res.status(200).json(result);
 });
 
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+// **Completed draft from ChatGPT, with explicit 'return' in main()
+// async function main() {
+//     try {
+//         const completion = await openai.chat.completions.create({
+//             messages: [{ role: "system", content: prompt(groceryItems) }],
+//             model: "gpt-3.5-turbo",
+//         });
+//         console.log('Completion:', completion.choices[0]);
+//         return completion.choices[0]; // Explicitly return the choice
+//     } catch (error) {
+//         console.error('Error:', error);
+//         throw new Error("Failed to get completion from OpenAI API");
+//     }
+// }
 
+//     try {
+//     const result = await main(); // Await the result of the async function
+//     res.status(200).json(result);
+//     } catch (error) {
+//     res.status(500).json({ error: error.message });
+//     }
+// });
+app.listen(port, () => console.log(`Server listening on port ${port}`));
