@@ -81,7 +81,7 @@ export const deleteItem = (e) => {
     }, 500);
 };
 
-export const addToShoppingList = (item, shoppingList) => {
+/**/export const addToShoppingList = (item, shoppingList) => {
     shoppingList.push(item);
     localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
 };
