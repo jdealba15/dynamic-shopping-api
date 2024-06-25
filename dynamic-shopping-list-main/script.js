@@ -9,7 +9,7 @@ import {
 } from "./utilities.js";
 
 const clearListBtn = document.getElementById('clear');
-const itemList = document.getElementById('item-list');
+const itemList = document.getElementById('itemList');
 const itemForm = document.getElementById('item-form');
 const itemInput = document.getElementById('item-input');
 const sortedList = document.getElementById('sorted-list');
@@ -127,26 +127,62 @@ categorizeButton.addEventListener('click', categorize);
 fInputContainer.addEventListener('input', sortItems);
 clearListBtn.addEventListener('click', clearItems);
 
-const url = 'http://localhost:3000';
-
-const requestOptions = {
-     method: 'POST',
-     headers: {
-        'Content-Type': 'application/json'
-     },
-    body: JSON.stringify(shoppingList)
- };
-
-fetch(url, requestOptions)
- .then(response => {
-    if(!response.ok) {
-        throw new Error('Network response was not okay');
+async function fetchItems() {
+    const url = 'http://localhost:3000/';
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shoppingList)
+    };
+    try {
+        const response = await fetch(url, requestOptions);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Response data:', data); // Debugging statement
+        
+        const contentString = data.message.content; // Key components, accessing groceries correctly from response
+        const content = JSON.parse(contentString); // Using JSON.parse method correctly
+        
+        if (!Array.isArray(content)) {
+            throw new Error('content is not an array or is undefined');
+        }
+        renderItems(content);
+    } catch (error) {
+        console.error('Error fetching items:', error);
     }
-    return response.json();
- })
- .then(data => {
-    console.log('Response successful:', data);
- })
- .catch(error =>{
-    console.error('There was a problem with the fetch operation', error);
- });
+}
+
+// function renderItems(content) {
+//     const itemList = document.getElementById('itemList');
+//     itemList.innerHTML = ''; // Clear existing content
+
+//     content.forEach(categoryObj => {
+//         const userDiv = document.createElement('div');
+//         userDiv.className = 'user';
+//         userDiv.innerHTML = `<strong>${item}</strong>;`
+//         itemList.appendChild(userDiv);
+//     });
+// }
+
+function renderItems(content) {
+    const itemList = document.getElementById('itemList');
+    itemList.innerHTML = ''; // Clear existing content
+
+    content.forEach(categoryObj => {
+        for (const category in categoryObj) {
+            const items = categoryObj[category];
+            items.forEach(item => {
+                const userDiv = document.createElement('div');
+                userDiv.className = 'user';
+                userDiv.innerHTML = `<strong>${item}</strong> (${category})`;
+                itemList.appendChild(userDiv);
+            });
+        }
+    });
+}
+
+window.onload = fetchItems;
