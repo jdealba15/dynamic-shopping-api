@@ -156,18 +156,6 @@ async function fetchItems() {
     }
 }
 
-// function renderItems(content) {
-//     const itemList = document.getElementById('itemList');
-//     itemList.innerHTML = ''; // Clear existing content
-
-//     content.forEach(categoryObj => {
-//         const userDiv = document.createElement('div');
-//         userDiv.className = 'user';
-//         userDiv.innerHTML = `<strong>${item}</strong>;`
-//         itemList.appendChild(userDiv);
-//     });
-// }
-
 function renderItems(content) {
     const itemList = document.getElementById('itemList');
     itemList.innerHTML = ''; // Clear existing content
@@ -175,14 +163,27 @@ function renderItems(content) {
     content.forEach(categoryObj => {
         for (const category in categoryObj) {
             const items = categoryObj[category];
-            items.forEach(item => {
-                const userDiv = document.createElement('div');
-                userDiv.className = 'user';
-                userDiv.innerHTML = `<strong>${item}</strong> (${category})`;
-                itemList.appendChild(userDiv);
-            });
+
+            // Create a container div for the category
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'category';
+
+            // Create and append a header for the category
+            const categoryHeader = document.createElement('h2');
+            categoryHeader.innerText = category;
+            categoryDiv.appendChild(categoryHeader);
+
+            // Create a paragraph to list all items in the category
+            const itemsParagraph = document.createElement('p');
+            itemsParagraph.innerText = items.join(', '); // Join items with commas
+            categoryDiv.appendChild(itemsParagraph);
+
+            // Append the category container to the itemList
+            itemList.appendChild(categoryDiv);
         }
     });
 }
 
 window.onload = fetchItems;
+
+
