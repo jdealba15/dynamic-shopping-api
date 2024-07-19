@@ -81,10 +81,15 @@ export const deleteItem = (e) => {
     }, 500);
 };
 
-/**/export const addToShoppingList = (item, shoppingList) => {
+export const addToShoppingList = (item, shoppingList) => {
     shoppingList.push(item);
     localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
 };
+
+// export const addCategoryList = (item, catShoppingList) => {
+//     catShoppingList.push(item);
+//     localStorage.setItem('catShoppingList');
+// }
 
 export const removeFromShoppingList = (item, shoppingList) => {
     const index = shoppingList.indexOf(item);

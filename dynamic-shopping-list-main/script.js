@@ -146,6 +146,7 @@ async function fetchItems() {
         
         const contentString = data.message.content; // Key components, accessing groceries correctly from response
         const content = JSON.parse(contentString); // Using JSON.parse method correctly
+        localStorage.setItem('sortedList', JSON.stringify(content));
         
         if (!Array.isArray(content)) {
             throw new Error('content is not an array or is undefined');
