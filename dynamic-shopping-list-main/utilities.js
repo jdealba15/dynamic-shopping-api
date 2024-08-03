@@ -48,33 +48,6 @@ export const createSortedCategory = (category, sortedList) => {
     sortedList.appendChild(li);
 };
 
-// export const fetchChatResponse = async (createSortedCategory, sortedList, shoppingList, itemList) => {
-//     localStorage.getItem('sortedList') && localStorage.removeItem('sortedList');
-
-//     const url = 'https://dynamic-shopping-api-fd908359fc38.herokuapp.com/';
-//     const options = {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(shoppingList)
-//     };
-
-//     const response = await fetch(url, options);
-//     const json = await response.json();
-//     const { data } = json;
-
-//     if (!data) {
-//         console.error('No data received');
-//         return null;
-//     }
-
-//     const content = JSON.parse(data?.message?.content);
-//     localStorage.setItem('sortedList', JSON.stringify(content));
-//     itemList.innerHTML = '';
-//     content.forEach(category => createSortedCategory(category, sortedList));
-// };
-
 export const deleteItem = (e) => {
     setTimeout(() => {
         e.target.closest('li').remove();

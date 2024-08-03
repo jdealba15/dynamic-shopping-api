@@ -6,6 +6,7 @@ const shoppingList = localStorage.getItem('shoppingList');
 const sortedList = localStorage.getItem('sortedList');
 
 const generatePDF = (e) => {
+  e.preventDefault();
   let data, dataSorted;
   
   try {
@@ -63,99 +64,6 @@ const generatePDF = (e) => {
     }
   }
   checkArray(listToUse);
-
-
-  // const fileName = listToUse ? "sortedList.pdf" : "shoppingList.pdf";
-  // doc.save(fileName);
 }
 
 downloadList.addEventListener('click', generatePDF);
-
-
-// const doc = new jsPDF();
-
-// const downloadList = document.getElementById('download');
-
-// downloadList.addEventListener('click', generatePDF);
-
-// const shoppingList = localStorage.getItem('shoppingList');
-
-// const sortedList = localStorage.getItem('sortedList');
-
-// function generatePDF() {
-//   const data = JSON.parse(shoppingList);
-//   const dataSorted = JSON.parse(sortedList);
-//   console.log(dataSorted);
-
-//   // Set initial position for text
-//   let yPosition = 10;
-
-//   // Iterate over the data and add it to the PDF
-//   dataSorted.forEach(category => {
-//       // Extract the category name and items
-//       const categoryName = Object.keys(category)[0];
-//       const items = category[categoryName];
-
-//       // Add category name to the PDF
-//       doc.setFontSize(16);
-//       doc.text(categoryName, 10, yPosition);
-//       yPosition += 10;
-
-//       // Add items to the PDF
-//       doc.setFontSize(12);
-//       items.forEach(item => {
-//           doc.text(`- ${item}`, 20, yPosition);
-//           yPosition += 10;
-//       });
-
-//       // Add some space between categories
-//       yPosition += 10;
-//   });
-  
-//   if (sortedList) {
-//     doc.text(dataSorted, 10, 10);
-//     doc.save("sortedList.pdf");
-//     // code to be executed if sortedList exists
-//   } else if (shoppingList) {
-//     doc.text(data, 10, 10);
-//     doc.save("shoppingList.pdf");
-//     // code to be executed if sortedList does not exist but shoppingList exists
-//   }
-// }
-
-///
-
-// if (!listToUse) {
-  //   console.error('No valid list to use for generating PDF');
-  //   return;
-  // }
-  // if(listToUse === dataSorted) {
-  //   listToUse.forEach(category => {
-  //     const categoryName = Object.keys(category)[0];
-  //     const items = category[categoryName];
-  
-  //     doc.setFontSize(16);
-  //     doc.text(categoryName, 10, yPosition);
-  //     yPosition += 10;
-  
-  //     doc.setFontSize(12);
-  //     items.forEach(item => {
-  //       doc.text(`- ${item}`, 20, yPosition);
-  //       yPosition += 10;
-  //     });
-  
-  //     yPosition += 10;
-  //   });
-  // } else {
-  //   doc.setFontSize(12);
-  //   listToUse.forEach(category => {
-  //     const items = category[Object.keys(category)[0]];
-  //     items.forEach(item => {
-  //       doc.text(`- ${item}`, 20, yPosition);
-  //       yPosition += 10;
-  //     });
-  //   });
-  // }
-
-////
-

@@ -118,7 +118,6 @@ const categorize = async (e) => {
     e.preventDefault();
     sortedList.innerHTML = '';
     try {
-        // fetchChatResponse(createSortedCategory, sortedList, shoppingList, itemList);
         fetchItems();
     } catch (error) {
         console.error('Error:', error);
@@ -190,7 +189,3 @@ function renderItems(content) {
         }
     });
 }
-
-// window.onload = fetchItems;
-
-
