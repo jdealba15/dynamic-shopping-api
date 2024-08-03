@@ -1,12 +1,13 @@
 import { 
     removeFromShoppingList, 
-    createSortedCategory,
+    // createSortedCategory,
     handleInvalidEntry,  
-    fetchChatResponse,
+    // fetchChatResponse,
     addToShoppingList,
     createItem, 
     deleteItem,  
 } from "./utilities.js";
+
 
 const clearListBtn = document.getElementById('clear');
 const itemList = document.getElementById('itemList');
@@ -16,7 +17,7 @@ const sortedList = document.getElementById('sorted-list');
 const fInputContainer = document.querySelector('.filter');
 const categorizeButton = document.querySelector('.categorize');
 const shoppingList = localStorage.getItem('shoppingList') ? JSON.parse(localStorage.getItem('shoppingList')) : [];
-const hideSortingOptions = () => shoppingList.length < 10 ? categorizeButton.style.display = 'none' : categorizeButton.style.display = 'block';
+const hideSortingOptions = () => shoppingList.length < 5 ? categorizeButton.style.display = 'none' : categorizeButton.style.display = 'block';
 
 const filterInput = (input) => {
     if (input.value.length === 0) {
@@ -84,6 +85,7 @@ const clearItems = (e) => {
         sortedList.removeChild(sortedList.firstChild);
     }
     localStorage.removeItem('shoppingList');
+    localStorage.removeItem('sortedList');
     filterAndClearButton('none');
 }
 
@@ -107,13 +109,17 @@ const sortItems = () => {
         }
         filteredItems.forEach(item => createItem(item, itemList));
     }
+    if(value.length > 1){
+        categorizeButton.style.display = 'block';
+    }
 }
 
 const categorize = async (e) => {
     e.preventDefault();
     sortedList.innerHTML = '';
     try {
-        fetchChatResponse(createSortedCategory, sortedList, shoppingList, itemList);
+        // fetchChatResponse(createSortedCategory, sortedList, shoppingList, itemList);
+        fetchItems();
     } catch (error) {
         console.error('Error:', error);
     }
@@ -185,6 +191,6 @@ function renderItems(content) {
     });
 }
 
-window.onload = fetchItems;
+// window.onload = fetchItems;
 
 
