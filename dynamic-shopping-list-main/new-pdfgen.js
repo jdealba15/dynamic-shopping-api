@@ -44,10 +44,8 @@ const generatePDF = (e) => {
 
   if (listEl.hasChildNodes()) {
     printList(shoppingList, doc);
-    console.log("yeppers");
   } if (sortedEl.hasChildNodes()) {
     printSorted(sortedList, doc);
-    console.log("yesh");
   };
 }
 
