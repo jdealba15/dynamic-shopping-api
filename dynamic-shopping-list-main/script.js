@@ -8,7 +8,6 @@ import {
     deleteItem,  
 } from "./utilities.js";
 
-
 const clearListBtn = document.getElementById('clear');
 const itemList = document.getElementById('itemList');
 const itemForm = document.getElementById('item-form');
@@ -56,7 +55,7 @@ const addItem = (e) => {
 
     if(itemInput.value !== '') {
         sortedList.innerHTML = '';
-        shoppingList.length < 10 ? categorizeButton.style.display = 'none' : categorizeButton.style.display = 'block';
+        shoppingList.length < 4 ? categorizeButton.style.display = 'none' : categorizeButton.style.display = 'block';
         addToShoppingList(itemInput.value, shoppingList);
         createItem(itemInput.value, itemList);
         itemInput.value = '';
@@ -86,7 +85,9 @@ const clearItems = (e) => {
     }
     localStorage.removeItem('shoppingList');
     localStorage.removeItem('sortedList');
+    
     filterAndClearButton('none');
+    console.log('Removing item from localStorage');
 }
 
 const sortItems = () => {
@@ -152,10 +153,8 @@ async function fetchItems() {
         const contentString = data.message.content; // Key components, accessing groceries correctly from response
         const content = JSON.parse(contentString); // Using JSON.parse method correctly
         localStorage.setItem('sortedList', JSON.stringify(content));
-        
-        if (!Array.isArray(content)) {
-            throw new Error('content is not an array or is undefined');
-        }
+        itemList.innerHTML = '';
+
         renderItems(content);
     } catch (error) {
         console.error('Error fetching items:', error);
@@ -163,8 +162,8 @@ async function fetchItems() {
 }
 
 function renderItems(content) {
-    const itemList = document.getElementById('itemList');
-    itemList.innerHTML = ''; // Clear existing content
+    const sortedList = document.getElementById('sorted-list');
+    sortedList.innerHTML = ''; // Clear existing content
 
     content.forEach(categoryObj => {
         for (const category in categoryObj) {
@@ -185,7 +184,7 @@ function renderItems(content) {
             categoryDiv.appendChild(itemsParagraph);
 
             // Append the category container to the itemList
-            itemList.appendChild(categoryDiv);
+            sortedList.appendChild(categoryDiv);
         }
     });
 }
