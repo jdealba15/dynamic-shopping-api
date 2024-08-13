@@ -2,7 +2,6 @@ import {
     removeFromShoppingList, 
     // createSortedCategory,
     handleInvalidEntry,  
-    // fetchChatResponse,
     addToShoppingList,
     createItem, 
     deleteItem,  
